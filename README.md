@@ -60,3 +60,24 @@ sudo wget https://datasheets.raspberrypi.com/cmio/dt-blob-dualcam.bin -O /boot/d
 最后在系统中安装cheese，即可对摄像头进行测试，从系统库中安装完opencv和opencv的python接口后，也进行了相应的测试，摄像头可以正常工作。
 在cheese中采集的图像是正常的，但是在opencv中采集的图像有色调之类的问题，需要通过正确配置摄像头属性才能解决问题。
 同时编写了简单的opencv测试程序，双目可以正常操作。
+
+# 5. OpenCV Python测试程序
+```
+import cv2
+cap0 = cv2.VideoCapture(0)
+cap0.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap0.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+cap1 = cv2.VideoCapture(1)
+cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+while True:
+    ret, frame0 = cap0.read()
+    ret, frame1 = cap1.read()
+    cv2.imshow("cap0", frame0)
+    cv2.imshow("cap1", frame1)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+cap0.release()
+cap1.release()
+cv2.destroyAllWindows()
+```
