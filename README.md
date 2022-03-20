@@ -82,6 +82,53 @@ cap1.release()
 cv2.destroyAllWindows()
 ```
 
+# 5.1 OpenCV C++ 测试程序
+
+```
+#include <stdio.h>
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+
+int main(int argc, char** argv ) {
+    VideoCapture cap0(0, CAP_V4L);
+    if (!cap0.isOpened()) {
+        printf("cannot open cam0\n");
+        return 1;
+    }
+    cap0.set(CAP_PROP_FRAME_WIDTH, 640);
+    cap0.set(CAP_PROP_FRAME_HEIGHT, 480);
+
+    VideoCapture cap1(1, CV_CAP_V4L);
+    if (!cap1.isOpened()) {
+        printf("cannot open cam1\n");
+        return 1;
+    }
+    cap1.set(CAP_PROP_FRAME_WIDTH, 640);
+    cap1.set(CAP_PROP_FRAME_HEIGHT, 480);
+
+    bool ret0, ret1;
+    Mat frame0, frame1;
+
+    for(int i = 0; i < 10; ++i) {
+        ret0 = cap0.read(frame0);
+        if(!ret0) {
+            printf("read cam0 error\n");
+            break;
+        }
+        ret1 = cap1.read(frame1);
+        if(!ret1) {
+            printf("read cam1 error\n");
+            break;
+        }
+        printf("Frame %d\n", i);
+    }
+    cap0.release();
+    cap1.release();
+
+    return 0;
+```
+
 # 6. 检测摄像头分辨率
 [这篇博客](https://www.learnpythonwithrune.org/find-all-possible-webcam-resolutions-with-opencv-in-python/)
 ```
