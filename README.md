@@ -85,6 +85,15 @@ cv2.destroyAllWindows()
 # 5.1 OpenCV C++ 测试程序
 
 ```
+cmake_minimum_required(VERSION 2.8)
+project( cam_test )
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( cam_test cam_test.cpp )
+target_link_libraries( cam_test ${OpenCV_LIBS} )
+```
+
+```
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 
@@ -99,7 +108,7 @@ int main(int argc, char** argv ) {
     cap0.set(CAP_PROP_FRAME_WIDTH, 640);
     cap0.set(CAP_PROP_FRAME_HEIGHT, 480);
 
-    VideoCapture cap1(1, CV_CAP_V4L);
+    VideoCapture cap1(1, CAP_V4L);
     if (!cap1.isOpened()) {
         printf("cannot open cam1\n");
         return 1;
